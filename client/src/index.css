@@ -1,46 +1,36 @@
-/* AntDesing overriding css .override */
-.ant-btn-primary.override {
-    background-color: rgb(87, 109, 8) !important;
+/* CSS variables */
+:root {
+    --primary-color: white;
+    --primary-bg-color: rgb(46, 63, 95);
 }
 
-input {
-    height: 40px;
-    /* border: 1px solid rgba(128, 128, 128, 0.5) !important; */
-}
-input:focus {
-    outline: none !important;
-    border: 2px solid gray !important;
-    box-shadow: 0 !important;
-}
-label {
-    font-size: 16px !important;
-    color: black;
-    font-weight: bold;
-}
-
-.ant-form-item {
-    margin: 10px 0 !important;
+body {
+    background-color: var(--primary-bg-color);
 }
 /* Common styling */
-.card-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-.normal-text {
-    font-size: 1rem;
-}
+
 .card {
-    box-shadow: 0 0 2px gray;
+    box-shadow: 0 0 4px gray;
 }
 .primary-button {
-    background-color: rgb(24, 94, 67) !important;
-    color: white;
+    background-color: var(--primary-bg-color);
+    color: var(--primary-color);
     border-radius: 0;
     width: 100%;
     height: 40px;
 }
+.anchor {
+    font-weight: bold;
+    color: black;
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+.anchor:hover {
+    text-decoration: none;
+}
 
-/* Authentication components */
+/* AUTHENTICATION COMPONENTS*/
+/* Authentication component ---------- */
 .authentication {
     height: 100vh;
     display: flex;
@@ -49,4 +39,37 @@ label {
 }
 .authentication-form {
     width: 400px;
+}
+.authentication .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: orangered;
+    color: var(--primary-color);
+    max-width: max-content;
+    padding: 8px 16px;
+    margin-top: 8px;
+    margin-left: -40px;
+    border-bottom-left-radius: 12px;
+}
+
+.vertical2 > div {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Form ---------- */
+input {
+    height: 40px;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+}
+input:focus {
+    outline: none;
+    border: 2px solid gray;
+    box-shadow: 0;
+}
+label {
+    font-size: 16px;
+    color: black;
+    font-weight: bold;
 }
