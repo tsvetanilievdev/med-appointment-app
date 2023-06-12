@@ -5,7 +5,7 @@ function Register() {
         <div className="authentication">
 
             <div className='authentication-form card'>
-                    <h1 className='card-title'>Nice to meet you</h1>
+                    <h1 className='card-title'>Welcome back</h1>
                 <form className='vertical2' onSubmit={onSubmitLogin}>
 
                     <div className='form-item'>
