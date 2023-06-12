@@ -8,9 +8,9 @@ function Register() {
                     <h1 className='card-title'>Welcome back</h1>
                 <form className='vertical2' onSubmit={onSubmitLogin}>
 
-                    <div className='form-item'>
-                        <label htmlFor="username">Username:</label>
-                        <input type="text" name='username' id='username' placeholder='Enter your username' />
+                <div className='form-item'>
+                        <label htmlFor="email">Email:</label>
+                        <input type="email" name='email' id='email' placeholder='Enter your email' />
                     </div>
 
                     <div className='form-item'>

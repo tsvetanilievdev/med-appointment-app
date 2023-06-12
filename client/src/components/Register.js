@@ -14,8 +14,8 @@ function Register() {
                     </div>
 
                     <div className='form-item'>
-                        <label htmlFor="username">Username:</label>
-                        <input type="text" name='username' id='username' placeholder='Enter your username' />
+                        <label htmlFor="email">Email:</label>
+                        <input type="email" name='email' id='email' placeholder='Enter your email' />
                     </div>
 
                     <div className='form-item'>
