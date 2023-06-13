@@ -27,7 +27,7 @@ router.post('/login', async (req, res) => {
             ...data,
         });
     } catch (error) {
-        res.status(400).json({
+        res.status(error.code).json({
             message: error.message,
             success: false,
         });

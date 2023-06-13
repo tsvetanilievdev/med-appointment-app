@@ -20,7 +20,9 @@ async function register(data) {
 async function login(data) {
     const existingUser = await checkUserExists(data.email);
     if (!existingUser) {
-        throw new Error('Incorrect credentials - email');
+        const error = new Error('Incorrect credentials - email');
+        error.code = 401;
+        throw error;
     }
 
     const matchPasswords = await comparePassword(
@@ -31,7 +33,9 @@ async function login(data) {
     if (matchPasswords) {
         return dataToReturn(existingUser);
     } else {
-        throw new Error('Incorrect credentials - wrong pass');
+        const error = new Error('Incorrect credentials - wrong pass');
+        error.code = 401;
+        throw error;
     }
 }
 
