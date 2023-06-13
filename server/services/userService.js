@@ -5,10 +5,7 @@ const jwt = require('jsonwebtoken');
 async function register(data) {
     const existingUser = await User.findOne({ email: data.email }).exec();
     if (existingUser) {
-        return res.status(400).json({
-            message: 'User with the same email already exists!',
-            success: false,
-        });
+        throw new Error('User with the same email already exists!');
     }
 
     const password = data.password;
@@ -20,14 +17,38 @@ async function register(data) {
         email: data.email,
         password: hashedPass,
     });
-    const token = createToken(user);
     return {
         data: { user: { email: user.email, name: user.name, id: user._id } },
-        token,
+        token: createToken(user),
     };
 }
+async function login(data) {
+    const existingUser = await User.findOne({ email: data.email }).exec();
+    if (!existingUser) {
+        throw new Error('Incorrect credentials - email');
+    }
 
-module.exports = register;
+    const matchPasswords = await bcrypt.compare(
+        data.password,
+        existingUser.password
+    );
+    if (matchPasswords) {
+        return {
+            data: {
+                user: {
+                    email: existingUser.email,
+                    name: existingUser.name,
+                    id: existingUser._id,
+                },
+            },
+            token: createToken(existingUser),
+        };
+    } else {
+        throw new Error('Incorrect credentials - wrong pass');
+    }
+}
+
+module.exports = { register, login };
 
 function createToken(user) {
     const payload = {

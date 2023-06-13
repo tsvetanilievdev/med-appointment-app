@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const register = require('../services/userService');
+const { register, login } = require('../services/userService');
 
 router.post('/register', async (req, res) => {
     try {
@@ -11,18 +11,27 @@ router.post('/register', async (req, res) => {
             ...data,
         });
     } catch (error) {
-        console.log('error', error);
         res.status(500).json({
-            message: 'Error in creating user!',
+            message: error.message,
             success: false,
-            error,
         });
     }
 });
 
 router.post('/login', async (req, res) => {
     try {
-    } catch (error) {}
+        const data = await login(req.body);
+        res.status(200).json({
+            message: 'User is logged in successfully!',
+            success: true,
+            ...data,
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+            success: false,
+        });
+    }
 });
 
 module.exports = router;
