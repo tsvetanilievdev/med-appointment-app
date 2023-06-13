@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 
 async function register(data) {
-    const existingUser = await checkUserExists();
+    const existingUser = await checkUserExists(data.email);
     if (existingUser) {
         throw new Error('User with the same email already exists!');
     }
@@ -18,7 +18,7 @@ async function register(data) {
     return dataToReturn(user);
 }
 async function login(data) {
-    const existingUser = await checkUserExists();
+    const existingUser = await checkUserExists(data.email);
     if (!existingUser) {
         throw new Error('Incorrect credentials - email');
     }

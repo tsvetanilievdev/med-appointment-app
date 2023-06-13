@@ -11,7 +11,7 @@ router.post('/register', async (req, res) => {
             ...data,
         });
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             message: error.message,
             success: false,
         });
@@ -27,7 +27,7 @@ router.post('/login', async (req, res) => {
             ...data,
         });
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             message: error.message,
             success: false,
         });
