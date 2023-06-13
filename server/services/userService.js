@@ -3,46 +3,33 @@ const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 
 async function register(data) {
-    const existingUser = await User.findOne({ email: data.email }).exec();
+    const existingUser = await checkUserExists();
     if (existingUser) {
         throw new Error('User with the same email already exists!');
     }
 
-    const password = data.password;
-    const salt = await bcrypt.genSalt(10);
-    const hashedPass = await bcrypt.hash(password, salt);
+    const hashedPass = await hashPassword(data.password);
 
     const user = await User.create({
         name: data.name,
         email: data.email,
         password: hashedPass,
     });
-    return {
-        data: { user: { email: user.email, name: user.name, id: user._id } },
-        token: createToken(user),
-    };
+    return dataToReturn(user);
 }
 async function login(data) {
-    const existingUser = await User.findOne({ email: data.email }).exec();
+    const existingUser = await checkUserExists();
     if (!existingUser) {
         throw new Error('Incorrect credentials - email');
     }
 
-    const matchPasswords = await bcrypt.compare(
+    const matchPasswords = await comparePassword(
         data.password,
         existingUser.password
     );
+
     if (matchPasswords) {
-        return {
-            data: {
-                user: {
-                    email: existingUser.email,
-                    name: existingUser.name,
-                    id: existingUser._id,
-                },
-            },
-            token: createToken(existingUser),
-        };
+        return dataToReturn(existingUser);
     } else {
         throw new Error('Incorrect credentials - wrong pass');
     }
@@ -56,4 +43,30 @@ function createToken(user) {
         email: user.email,
     };
     return jwt.sign(payload, process.env.JWT_SECRET);
+}
+
+async function checkUserExists(email) {
+    return User.findOne({ email }).exec();
+}
+
+async function hashPassword(password) {
+    const salt = await bcrypt.genSalt(10);
+    return bcrypt.hash(password, salt);
+}
+
+async function comparePassword(password, userHashedPassword) {
+    return bcrypt.compare(password, userHashedPassword);
+}
+
+function dataToReturn(user) {
+    return {
+        data: {
+            user: {
+                email: user.email,
+                name: user.name,
+                id: user._id,
+            },
+        },
+        token: createToken(user),
+    };
 }
