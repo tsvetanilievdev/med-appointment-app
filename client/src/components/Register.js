@@ -45,9 +45,22 @@ function Register() {
 
 export default Register;
 
-function onSubmitRegister(event) {
+async function onSubmitRegister(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    console.log(formData);
-    console.log(Object.fromEntries(formData));
+
+    try {
+        const response = await fetch('http://localhost:5001/api/user/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Object.fromEntries(formData))
+        });
+        const jsonData = await response.json();
+        console.log(jsonData);
+    } catch (error) {
+        
+    }
+
 }
