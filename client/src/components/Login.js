@@ -1,7 +1,32 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import request from '../services/requester';
+import toast from 'react-hot-toast';
+
 function Login() {
+    const navigate = useNavigate();
+    async function onSubmitLogin(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        try {
+            const response = await request.post(
+                '/api/user/login',
+                Object.fromEntries(formData)
+            );
+            const jsonData = await response.json();
+            if (jsonData.success) {
+                toast.success(jsonData.message, { duration: 2000 });
+                toast.loading('Redirect to home page', { duration: 4000 });
+                navigate('/');
+            } else {
+                toast.error(jsonData.message);
+                throw new Error(jsonData.message);
+            }
+        } catch (error) {
+            toast.error('REGISTER ERROR >>>>>>>>>>>>>', error.message);
+        }
+    }
     return (
         <div className="authentication">
             <div className="authentication-form card">
@@ -44,21 +69,3 @@ function Login() {
 }
 
 export default Login;
-
-async function onSubmitLogin(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-
-    try {
-        const response = await request.post(
-            '/api/user/login',
-            Object.fromEntries(formData)
-        );
-        const jsonData = await response.json();
-        if (!jsonData.success) {
-            throw new Error(jsonData.message);
-        }
-    } catch (error) {
-        console.log('LOGIN ERROR >>>>>>>>>>>>>', error.message);
-    }
-}

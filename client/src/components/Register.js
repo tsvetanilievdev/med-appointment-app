@@ -1,7 +1,32 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import request from '../services/requester';
+import toast from 'react-hot-toast';
+
 function Register() {
+    const navigate = useNavigate();
+    async function onSubmitRegister(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        try {
+            const response = await request.post(
+                '/api/user/register',
+                Object.fromEntries(formData)
+            );
+            const jsonData = await response.json();
+            if (jsonData.success) {
+                toast.success(jsonData.message, { duration: 4000 });
+                toast.loading('Redirect to home page', { duration: 2000 });
+                navigate('/');
+            } else {
+                toast.error(jsonData.message);
+                throw new Error(jsonData.message);
+            }
+        } catch (error) {
+            toast.error('REGISTER ERROR >>>>>>>>>>>>>', error.message);
+        }
+    }
     return (
         <div className="authentication">
             <div className="authentication-form card">
@@ -64,21 +89,3 @@ function Register() {
 }
 
 export default Register;
-
-async function onSubmitRegister(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-
-    try {
-        const response = await request.post(
-            '/api/user/register',
-            Object.fromEntries(formData)
-        );
-        const jsonData = await response.json();
-        if (!jsonData.success) {
-            throw new Error(jsonData.message);
-        }
-    } catch (error) {
-        console.log('REGISTER ERROR >>>>>>>>>>>>>', error.message);
-    }
-}
