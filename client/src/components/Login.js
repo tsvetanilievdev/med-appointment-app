@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import request from '../services/requester';
 function Login() {
     return (
         <div className="authentication">
@@ -49,13 +50,10 @@ async function onSubmitLogin(event) {
     const formData = new FormData(event.target);
 
     try {
-        const response = await fetch('http://localhost:5001/api/user/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(Object.fromEntries(formData)),
-        });
+        const response = await request.post(
+            '/api/user/login',
+            Object.fromEntries(formData)
+        );
         const jsonData = await response.json();
         if (!jsonData.success) {
             throw new Error(jsonData.message);

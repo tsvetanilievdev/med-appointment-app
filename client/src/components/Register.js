@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import request from '../services/requester';
 function Register() {
     return (
         <div className="authentication">
@@ -69,15 +70,9 @@ async function onSubmitRegister(event) {
     const formData = new FormData(event.target);
 
     try {
-        const response = await fetch(
-            'http://localhost:5001/api/user/register',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(Object.fromEntries(formData)),
-            }
+        const response = await request.post(
+            '/api/user/register',
+            Object.fromEntries(formData)
         );
         const jsonData = await response.json();
         if (!jsonData.success) {
