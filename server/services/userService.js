@@ -20,7 +20,7 @@ async function register(data) {
 async function login(data) {
     const existingUser = await checkUserExists(data.email);
     if (!existingUser) {
-        const error = new Error('Incorrect credentials - email');
+        const error = new Error('Incorrect credentials - user does not exist');
         error.code = 401;
         throw error;
     }
@@ -31,12 +31,12 @@ async function login(data) {
     );
 
     if (matchPasswords) {
-        return dataToReturn(existingUser);
-    } else {
-        const error = new Error('Incorrect credentials - wrong pass');
+        const error = new Error('Incorrect credentials - wrong password');
         error.code = 401;
         throw error;
     }
+
+    return dataToReturn(existingUser);
 }
 
 module.exports = { register, login };
@@ -46,7 +46,7 @@ function createToken(user) {
         id: user.id,
         email: user.email,
     };
-    return jwt.sign(payload, process.env.JWT_SECRET);
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '12h' });
 }
 
 async function checkUserExists(email) {

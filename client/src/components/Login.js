@@ -18,6 +18,7 @@ function Login() {
             if (jsonData.success) {
                 toast.success(jsonData.message, { duration: 2000 });
                 toast.loading('Redirect to home page', { duration: 4000 });
+                localStorage.setItem('token', jsonData.token);
                 navigate('/');
             } else {
                 toast.error(jsonData.message);
