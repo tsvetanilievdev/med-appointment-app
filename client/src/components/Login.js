@@ -16,8 +16,8 @@ function Login() {
             );
             const jsonData = await response.json();
             if (jsonData.success) {
-                toast.success(jsonData.message, { duration: 2000 });
-                toast.loading('Redirect to home page', { duration: 4000 });
+                toast('Redirect to home page', { duration: 2000 });
+                toast.success(jsonData.message, { duration: 3000 });
                 localStorage.setItem('token', jsonData.token);
                 navigate('/');
             } else {

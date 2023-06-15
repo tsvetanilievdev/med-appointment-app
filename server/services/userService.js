@@ -30,7 +30,7 @@ async function login(data) {
         existingUser.password
     );
 
-    if (matchPasswords) {
+    if (!matchPasswords) {
         const error = new Error('Incorrect credentials - wrong password');
         error.code = 401;
         throw error;
