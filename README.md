@@ -1,7 +1,7 @@
 # MERN med-appointment-app
 
-## Used:
-### MongoDB
-### Express
-### React
-### Node.js
+### Used technologies/frameworks/libraries:
+## MongoDB
+## Express
+## React
+## Node.js
