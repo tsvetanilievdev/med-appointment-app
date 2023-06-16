@@ -14,8 +14,8 @@ const getOptions = (method = 'GET', data) => {
         options.body = JSON.stringify(data);
     }
 
-    if (sessionStorage.getItem('token') != null) {
-        options.headers.token = sessionStorage.getItem('token');
+    if (localStorage.getItem('token') != null) {
+        options.headers.token = localStorage.getItem('token');
     }
 
     return options;
