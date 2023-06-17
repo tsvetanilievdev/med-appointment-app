@@ -1,4 +1,4 @@
-const host = 'http://localhost:5001';
+const host = `http://localhost:5001`;
 
 const request = async (url, options) => {
     return fetch(host + url, options);
@@ -25,10 +25,19 @@ const get = (url) => request(url, getOptions());
 const post = (url, data) => request(url, getOptions('POST', data));
 const put = (url, data) => request(url, getOptions('PUT', data));
 const del = (url, data) => request(url, getOptions('DELETE', data));
+const protect = (url, token) =>
+    fetch(host + url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: token,
+        },
+    });
 
 module.exports = {
     get,
     post,
     put,
     delete: del,
+    protect,
 };

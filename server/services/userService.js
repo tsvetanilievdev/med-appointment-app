@@ -39,12 +39,13 @@ async function login(data) {
     return dataToReturn(existingUser);
 }
 
-module.exports = { register, login };
+async function getLeanUserById(id) {
+    return User.findById(id).select('-password -createdAt -updatedAt').exec();
+}
 
 function createToken(user) {
     const payload = {
         id: user.id,
-        email: user.email,
     };
     return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '12h' });
 }
@@ -64,13 +65,13 @@ async function comparePassword(password, userHashedPassword) {
 
 function dataToReturn(user) {
     return {
-        data: {
-            user: {
-                email: user.email,
-                name: user.name,
-                id: user._id,
-            },
+        user: {
+            email: user.email,
+            name: user.name,
+            id: user._id,
         },
         token: createToken(user),
     };
 }
+
+module.exports = { register, login, getLeanUserById };

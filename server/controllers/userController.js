@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
-const { register, login } = require('../services/userService');
+const authMiddleware = require('../middlewares/authMiddleware');
+const { register, login, getLeanUserById } = require('../services/userService');
 
 router.post('/register', async (req, res) => {
     try {
@@ -34,11 +35,17 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('get-user-info-by-id', async (req, res) => {
+router.post('/get-user-info-by-id', authMiddleware, async (req, res) => {
     try {
-        //TO DOOO
-        // const response =
-    } catch (error) {}
+        const user = await getLeanUserById(req.body.userId);
+        res.status(200).json({
+            message: 'Auth passed',
+            user,
+        });
+    } catch (error) {
+        res.status(405).json({ message: error.message });
+        console.log(error.message);
+    }
 });
 
 module.exports = router;
