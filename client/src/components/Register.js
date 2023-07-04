@@ -4,6 +4,7 @@ import request from '../services/requester';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from '../redux/alertsReducer';
+import PublicRoute from './PublicRoute';
 
 function Register() {
     const dispatch = useDispatch();
@@ -95,4 +96,12 @@ function Register() {
     );
 }
 
-export default Register;
+function ProtectedRegister(props) {
+    return (
+        <PublicRoute>
+            <Register props={props} />
+        </PublicRoute>
+    );
+}
+
+export default ProtectedRegister;

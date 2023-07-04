@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import requester from '../services/requester';
+import ProtectedRoute from './ProtectedRoute';
 function Home() {
     const getData = async () => {
         try {
@@ -24,4 +25,11 @@ function Home() {
     );
 }
 
-export default Home;
+function ProtectedHome(props) {
+    return (
+        <ProtectedRoute>
+            <Home props={props} />
+        </ProtectedRoute>
+    );
+}
+export default ProtectedHome;

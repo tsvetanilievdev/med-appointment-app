@@ -4,6 +4,7 @@ import request from '../services/requester';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from '../redux/alertsReducer';
+import PublicRoute from './PublicRoute';
 
 function Login() {
     const dispatch = useDispatch();
@@ -76,4 +77,11 @@ function Login() {
     );
 }
 
-export default Login;
+function ProtectedLogin(props) {
+    return (
+        <PublicRoute>
+            <Login props={props} />
+        </PublicRoute>
+    );
+}
+export default ProtectedLogin;
