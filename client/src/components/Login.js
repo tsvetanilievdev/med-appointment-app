@@ -2,8 +2,11 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import request from '../services/requester';
 import toast from 'react-hot-toast';
+import { useSelector, useDispatch } from 'react-redux';
 
 function Login() {
+    const { loading } = useSelector((state) => state.alerts);
+    console.log('LOADING>>>>>>>>', loading);
     const navigate = useNavigate();
     async function onSubmitLogin(event) {
         event.preventDefault();
