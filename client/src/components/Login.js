@@ -25,7 +25,7 @@ function Login() {
                 throw new Error(jsonData.message);
             }
         } catch (error) {
-            toast.error('REGISTER ERROR >>>>>>>>>>>>>', error.message);
+            toast.error('LOGIN ERROR >>>>>>>>>>>>>', error.message);
         }
     }
     return (

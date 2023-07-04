@@ -39,6 +39,7 @@ router.post('/get-user-info-by-id', authMiddleware, async (req, res) => {
     try {
         const user = await getLeanUserById(req.body.userId);
         res.status(200).json({
+            success: true,
             message: 'Auth passed',
             user,
         });

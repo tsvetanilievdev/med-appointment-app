@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-module.exports = async (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
     const rawToken = req.headers.authorization;
     if (!rawToken || !rawToken.startsWith('Bearer ')) {
         return res
@@ -31,3 +31,5 @@ async function verifyToken(token) {
         });
     });
 }
+
+module.exports = authMiddleware;

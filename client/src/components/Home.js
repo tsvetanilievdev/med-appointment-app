@@ -5,7 +5,7 @@ function Home() {
         try {
             const response = await requester.protect(
                 '/api/user/get-user-info-by-id',
-                'Bearer ' + localStorage.getItem('token')
+                localStorage.getItem('token')
             );
             const jsonData = await response.json();
             console.log('Home jsonData');
