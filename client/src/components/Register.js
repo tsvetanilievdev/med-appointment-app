@@ -2,19 +2,24 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import request from '../services/requester';
 import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { hideLoading, showLoading } from '../redux/alertsReducer';
 
 function Register() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     async function onSubmitRegister(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
 
         try {
+            dispatch(showLoading());
             const response = await request.post(
                 '/api/user/register',
                 Object.fromEntries(formData)
             );
             const jsonData = await response.json();
+            dispatch(hideLoading());
             if (jsonData.success) {
                 toast.success(jsonData.message, { duration: 4000 });
                 toast.loading('Redirect to home page', { duration: 2000 });
@@ -25,6 +30,7 @@ function Register() {
                 throw new Error(jsonData.message);
             }
         } catch (error) {
+            dispatch(hideLoading());
             toast.error('REGISTER ERROR >>>>>>>>>>>>>', error.message);
         }
     }

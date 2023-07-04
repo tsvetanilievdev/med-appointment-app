@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const alertsSlice = createSlice({
     name: 'alerts',
     initialState: {
-        loading: false
+        loading: false,
     },
     reducers: {
         showLoading: (state) => {
@@ -11,8 +11,8 @@ export const alertsSlice = createSlice({
         },
         hideLoading: (state) => {
             state.loading = false;
-        }
-    }
-})
+        },
+    },
+});
 
-const {showLoading, hideLoading} = alertsSlice.actions;
+export const { showLoading, hideLoading } = alertsSlice.actions;

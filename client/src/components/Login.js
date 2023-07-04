@@ -2,22 +2,25 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import request from '../services/requester';
 import toast from 'react-hot-toast';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { hideLoading, showLoading } from '../redux/alertsReducer';
 
 function Login() {
-    const { loading } = useSelector((state) => state.alerts);
-    console.log('LOADING>>>>>>>>', loading);
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
     async function onSubmitLogin(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
 
         try {
+            dispatch(showLoading());
             const response = await request.post(
                 '/api/user/login',
                 Object.fromEntries(formData)
             );
             const jsonData = await response.json();
+            dispatch(hideLoading());
             if (jsonData.success) {
                 toast('Redirect to home page', { duration: 2000 });
                 toast.success(jsonData.message, { duration: 3000 });
@@ -28,6 +31,7 @@ function Login() {
                 throw new Error(jsonData.message);
             }
         } catch (error) {
+            dispatch(hideLoading());
             toast.error('LOGIN ERROR >>>>>>>>>>>>>', error.message);
         }
     }
