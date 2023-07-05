@@ -2,9 +2,11 @@
 :root {
     --primary-color: white;
     --primary-bg-color: rgb(46, 63, 95);
+    --primary-bg-color-light: rgb(86, 116, 172);
 }
 
 body {
+    color: var(--primary-color);
     background-color: var(--primary-bg-color);
 }
 /* Common styling */

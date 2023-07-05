@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import requester from '../services/requester';
 import ProtectedRoute from './ProtectedRoute';
+import Layout from './Layout/Layout';
 function Home() {
     const getData = async () => {
         try {
@@ -19,9 +20,11 @@ function Home() {
         getData();
     }, []);
     return (
-        <div>
-            <h1>Home page</h1>
-        </div>
+        <Layout>
+            <div>
+                <h1>Home page</h1>
+            </div>
+        </Layout>
     );
 }
 
