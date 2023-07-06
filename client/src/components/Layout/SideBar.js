@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-function Sidebar(props) {
+function Sidebar({ collapsed }) {
     const location = useLocation();
     const userMenuList = [
         {
@@ -24,21 +24,26 @@ function Sidebar(props) {
         },
     ];
     return (
-        <div className="sidebar">
-            <h3>MENU</h3>
-            {userMenuList.map((item) => {
-                const activeLink = location.pathname === item.path;
-                return (
-                    <div
-                        className={`menu-item ${
-                            activeLink ? 'active-menu-item' : ''
-                        }`}
-                    >
-                        <i className={item.icon}></i>
-                        <Link to={item.path}>{item.name}</Link>
-                    </div>
-                );
-            })}
+        <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
+            <div className="menu">
+                <h3>MENU</h3>
+                {userMenuList.map((item, i) => {
+                    const activeLink = location.pathname === item.path;
+                    return (
+                        <div
+                            key={i}
+                            className={`menu-item ${
+                                activeLink ? 'active-menu-item' : ''
+                            }`}
+                        >
+                            <Link to={item.path}>
+                                <i className={item.icon}></i>{' '}
+                                {collapsed ? ' ' : item.name}
+                            </Link>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 }
