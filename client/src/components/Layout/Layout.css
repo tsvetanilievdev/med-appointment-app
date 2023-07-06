@@ -61,11 +61,22 @@
     height: 10vh;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 .content-header i.action-header-icon {
     font-size: 2rem;
     cursor: pointer;
 }
+.content-header-user {
+    display: flex;
+    align-items: center;
+}
+.content-header-user a {
+    margin-left: 10px;
+    font-size: 1.25rem;
+    color: white;
+}
+
 /* --CONTENT-BODY */
 .content-body {
     background-color: var(--primary-bg-color-light);

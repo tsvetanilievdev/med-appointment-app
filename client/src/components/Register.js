@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import request from '../services/requester';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { hideLoading, showLoading } from '../redux/alertsReducer';
+import { hideLoading, showLoading } from '../redux/alertsSlice';
 import PublicRoute from './PublicRoute';
 
 function Register() {

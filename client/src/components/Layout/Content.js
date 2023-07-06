@@ -1,4 +1,8 @@
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 function Content({ children, toggleCollapsed, collapsed }) {
+    const { user } = useSelector((state) => state.user);
     return (
         <div className="content">
             <div className="content-header">
@@ -13,7 +17,10 @@ function Content({ children, toggleCollapsed, collapsed }) {
                         onClick={toggleCollapsed}
                     ></i>
                 )}
-                div.
+                <div className="content-header-user">
+                    <i className="ri-notification-3-line action-header-icon"></i>
+                    <Link to="/profile">{user?.name}</Link>
+                </div>
             </div>
             <div className="content-body">
                 Content body
